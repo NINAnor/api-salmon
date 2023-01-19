@@ -1,0 +1,4 @@
+Package: api-salmon-R
+Type: Package
+Title: A high level interface for communicating with NINA's Fiskdatabasen
+Version: 0.0.1.0

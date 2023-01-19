@@ -1,9 +1,0 @@
-version: '3.2'
-
-services:
-  api-salmon:
-    restart: on-failure:2
-    image: ghcr.io/ninanor/api-salmon:main
-    ports:
-      - '8050:8050'
-
