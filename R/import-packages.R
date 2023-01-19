@@ -1,6 +1,6 @@
 #' @import DBI 
 #' @import assertthat
 #' @import odbc
-#' @import tidyverse
+#' @import tibble
 NULL
 #'> NULL

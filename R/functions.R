@@ -53,7 +53,7 @@ query_table <- function(connection, table, columns = NA, condition=NA){
           a single condition.")
   }
   # Make into a dataset
-  result <- tidyverse::as_tibble(result)
+  result <- tibble::as_tibble(result)
   
   # Return the results of the query
   return(result)
