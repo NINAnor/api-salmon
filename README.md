@@ -1,55 +1,46 @@
-# api-salmon
+# api-salmon-R :fish:
 
-Project that sets up an API in Python for retrieving the data of Laksdatabasen in R.
+A small R package that abstracts most of the database manipulation and SQL queries for
+NINA's fish database.
 
-## Function to load data from Laksdatabasen in R
+# How to use it
 
-You can use this helper function to load the table you want from *laksdatabasen*.
-
-You may need to install the packages `httr` and `jsonlite` beforehand.
-
+It is possible to connect to the fish database using:
 
 ```
-library(httr)
-library(jsonlite)
-
-laksdata_load <- function(table){
-  query <- GET(paste0("http://nindocker02.nina.no:8050/", table))
-  data <- fromJSON(rawToChar(query$content))
-  return(data)
-}
-
+con <- fiskdatabasen_connect()
 ```
 
-For example, if I want to load the table `FELTAAR` I would write it such that:
+The `con` object represent the connection to the database. Now that the connection is set up we can inspect some properties of the fish database.
+For examples, it is possible to get the names of the columns of `ENKELTFISK` using the function `get_columns` as displayed below:
 
 ```
-feltaar <- laksdata_load(feltaar)
+get_columns(con, "ENKELTFISK")
 ```
 
-You can find the correspondance table name / query below
+After establishing the connection it is possible to query the database with the function 
+`query_table`. 
 
-# List of table names 
+The `query_table` function take different arguments:
 
-- ENKELTFISK -> enkeltfisk
-- Redskap -> redskap
-- Redskapspesifikasjon -> redskapspesifikasjon
-- DRIFTSOPPLYNSNINGER -> driftsopplynsninger
-- Kvalitet_skjellprove -> kvalitet_skjellprove
-- FELTAAR -> feltaar
-- FELTOPERASJONER -> feltoperasjoner
-- ENKELTFISK -> enkeltfisk (This one is large and will take time to load in R memory)
-- Circulimalinger -> circulimalinger
-- GRUPPER_AV_FISK -> grupper_av_fisk
-- Merknad -> merknad
-- LOKALITETER -> lokaliteter
-- Vill_oppdrett -> vill_oppdrett
-- Storrelsesgruppe_aal -> storrelsesgruppe_aal
-- Skjellavleser -> skjellavleser
-- Objekter -> objekter
-- Livsstadium -> livsstadium
-- Kjonnsstadium -> kjonnsstadium
-- Kjonnsbest_metode -> kjonnsbest_metode
-- Kjonn -> kjonn
-- Art_form -> art_form
-- AdmAktivitet -> admaktivitet
+- **connection**: the object that connects to the database. In our example `con`
+- **table**: The table to extract the data from. In our example `ENKELTFISK`
+- **columns** (optional): The columns of the table that is to be extracted. If no columns are specified, the full table will be extracted.
+- **condition** (optional): Used to filter the table given a condition. **NOTE** that only one condition can be specified. This is useful for a first filtering of the dataset, then `dplyr` or base R can be used to further filter.
+
+See examples below:
+
+```
+# Get the full Reskap dataset
+redskap <- query_table(connection = con, table="Redskap")
+
+# Get parts of the ENKELTFISK dataset
+alta_data <- query_table(connection = con, table="ENKELTFISK", columns = c("Lregnr","EnkeltfiskID", "Feltaar", "Dato","KjonnID","Vill_oppdrettetID"), condition = "Lregnr = 200212")
+```
+
+# Acknowledgments
+
+This R package has been created by [Benjamin Cretois](https://www.nina.no/english/Contact/Employees/Employee-info?AnsattID=15849) and [Henrik H. Berntsen](https://www.nina.no/kontakt/Ansatte/Ansattinformasjon.aspx?AnsattID=15368)
+
+
+
