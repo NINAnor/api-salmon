@@ -3,6 +3,13 @@
 A small R package that abstracts most of the database manipulation and SQL queries for
 NINA's fish database.
 
+# Install and load the package
+
+```
+devtools::install_github("https://github.com/NINAnor/api-salmon")
+library(apisalmon)
+```
+
 # How to use it
 
 It is possible to connect to the fish database using:
