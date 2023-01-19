@@ -1,14 +1,17 @@
-Package: api-salmon-R
+Package: apisalmon
 Type: Package
 Title: A high level interface for communicating with NINA's Fiskdatabasen
-Version: 0.0.1.0
-Author: Benjamin Cretois
-License: MIT
+Version: 0.1.0
+Authors@R: person("Benjamin", "Cretois", email = "benjamin.cretois@nina.no",
+                  role = c("aut", "cre"))
+Description: A high level interface for communicating with NINA's Fiskdatabasen
 Encoding: UTF-8
-Imports: DBI, 
-          assertthat, 
-          odbc, 
-          tidyverse
-Suggests: roxygen2
-Roxygen: list(markdown = TRUE)
+LazyData: true
+Depends: 
+    R (>= 3.1)
+Imports: 
+  DBI, 
+  assertthat, 
+  odbc, 
+  tidyverse
 RoxygenNote: 7.2.3
