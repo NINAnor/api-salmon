@@ -3,7 +3,7 @@
 #' Connection to fiskdatabasen
 #' @return A connection to the database
 #' @examples 
-#' con <- fiskdatabasen_connect()
+#' con<-fiskdatabasen_connect()
 #' @export
 fiskdatabasen_connect <- function(){
   
@@ -21,12 +21,29 @@ fiskdatabasen_connect <- function(){
 #' @param con table
 #' @return A vector containing the names of the columns of the specific table
 #' @examples 
-#' cols <- get_columns(con, "Redskap")
+#' cols<-get_columns(con, "Redskap")
 #' @export
 get_columns <- function(con, table){
   columns <- DBI::dbListFields(con, table)
   return(columns)
 }
+
+
+#' Get tables
+#'
+#' Get the tables from the fiskdatabasen
+#' @return A vector containing the names of all the tables from the fiskdatabase
+#' @examples 
+#' cols<-get_tables()
+#' @export
+get_tables <- function(){
+  tables <- c("Objekter", "Art_form", "LOKALITETER", "Redskap", "Redskapspesifikasjon",
+              "feltoperasjoner", "Driftsopplysninger", "Kjonn", "Kjonnsstadium",
+              "kvalitet_skjellprove", "Livsstadium", "Vill_oppdrett", "visuell_Vill_oppdrett",
+              "Circulimalinger", "Skader_defkter", "FELTAAR", "Merknad", "Skjellavleser",
+              "ENKELTFISK")
+  return(tables)
+  }
 
 #' Query table
 #'
@@ -34,7 +51,7 @@ get_columns <- function(con, table){
 #' @param connection, table, columns, condition
 #' @return A single string
 #' @examples 
-#' alta_data <- query_table(connection = con, table="ENKELTFISK", columns = c("Lregnr","EnkeltfiskID", "Feltaar", "Dato","KjonnID","Vill_oppdrettetID"), condition = "Lregnr = 200212")
+#' alta_data<-query_table(connection = con, table="ENKELTFISK", columns = c("Lregnr","EnkeltfiskID", "Feltaar", "Dato","KjonnID","Vill_oppdrettetID"), condition = "Lregnr = 200212")
 #' @export
 query_table <- function(connection, table, columns = NA, condition=NA){
   

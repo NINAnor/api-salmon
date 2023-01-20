@@ -1,9 +1,11 @@
-# api-salmon-R :fish:
+# api-salmon :fish:
 
 A small R package that abstracts most of the database manipulation and SQL queries for
 NINA's fish database.
 
 # Install and load the package
+
+:warning: the name of the repo and the library you call in R vary slightly :warning:
 
 ```
 devtools::install_github("https://github.com/NINAnor/api-salmon")
@@ -12,10 +14,19 @@ library(apisalmon)
 
 # How to use it
 
+## Connect to database and summarise the information
+
 It is possible to connect to the fish database using:
 
 ```
 con <- fiskdatabasen_connect()
+```
+
+After establishing the connection it is possible to list the names of the tables present in the database using the function
+`get_tables()` as follow:
+
+```
+get_tables()
 ```
 
 The `con` object represent the connection to the database. Now that the connection is set up we can inspect some properties of the fish database.
@@ -24,6 +35,8 @@ For examples, it is possible to get the names of the columns of `ENKELTFISK` usi
 ```
 get_columns(con, "ENKELTFISK")
 ```
+
+## Get a dataframe
 
 After establishing the connection it is possible to query the database with the function 
 `query_table`. 

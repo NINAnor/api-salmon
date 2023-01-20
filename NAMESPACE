@@ -2,10 +2,11 @@
 
 export(fiskdatabasen_connect)
 export(get_columns)
+export(get_tables)
 export(query_table)
 export(return_columns)
 export(transform_to_string)
 import(DBI)
 import(assertthat)
 import(odbc)
-import(tidyverse)
+import(tibble)
