@@ -53,7 +53,7 @@ get_tables <- function(){
 #' @examples 
 #' alta_data<-query_table(connection = con, table="ENKELTFISK", columns = c("Lregnr","EnkeltfiskID", "Feltaar", "Dato","KjonnID","Vill_oppdrettetID"), condition = "Lregnr = 200212")
 #' @export
-query_table <- function(connection, table, columns = NA, condition=NA){
+query_table <- function(connection, table, columns = "*", condition=NA){
   
   columns <- return_columns(columns)
   
