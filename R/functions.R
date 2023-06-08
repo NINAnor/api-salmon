@@ -41,7 +41,7 @@ get_tables <- function(){
               "feltoperasjoner", "Driftsopplysninger", "Kjonn", "Kjonnsstadium",
               "kvalitet_skjellprove", "Livsstadium", "Vill_oppdrett", "visuell_Vill_oppdrett",
               "Circulimalinger", "Skader_defkter", "FELTAAR", "Merknad", "Skjellavleser",
-              "ENKELTFISK")
+              "ENKELTFISK", "Storrelsesgruppe_aal", "AdmAktivitet")
   return(tables)
   }
 
