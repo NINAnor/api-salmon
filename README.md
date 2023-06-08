@@ -58,6 +58,62 @@ redskap <- query_table(connection = con, table="Redskap")
 alta_data <- query_table(connection = con, table="ENKELTFISK", columns = c("Lregnr","EnkeltfiskID", "Feltaar", "Dato","KjonnID","Vill_oppdrettetID"), condition = "Lregnr = 200212")
 ```
 
+# Get all support tables
+
+```
+lokaliteter_1<-query_table(con,columns = c("Lregnr","Feltoperasjonsnr","Loknr","Loknavn","Lokangivelse","Lokbeskrivelse"), table="LOKALITETER") # klarer ikke alt. Blir det for mye? Klarer ikke Feltopersajonsnr, x, Y, X33, Y33
+lokaliteter_2<-query_table(con,columns = c("Lregnr","Feltoperasjonsnr","Loknr","Elveavsnitt", "UTM_koordinat", "UTM_datum", "UTM_sone", "X", "Y", "X33", "Y33", "Lengdegrad", "Breddegrad","Merknader", "SSMA_TimeStamp"), table="LOKALITETER")
+lokaliteter_3<-query_table(con,columns = c("Lregnr","Feltoperasjonsnr","Loknr","VaarSone"), table="LOKALITETER")
+lokaliteter<-lokaliteter_1 %>% full_join(lokaliteter_2) %>% full_join(lokaliteter_3)
+```
+
+```
+drift_1<-query_table(con,table = "Driftsopplysninger", columns = c("DriftsopplysningerID","Lregnr", "Feltoperasjonsnr", "Feltaar","Loknr","Dato", "Dato_fra","Dato_til","Fangstperiode","RedskapID"))
+drift_2<-query_table(con,table = "Driftsopplysninger", columns = c("DriftsopplysningerID","Lregnr", "Feltoperasjonsnr", "Feltaar","Loknr","Dato",  "Dato_fra","Dato_til","RedskapspesifikasjonID" ,"Vannforing",             "Vannstand"  ,            "Vanntemperatur"     ,    "Elfiskeomgang" ,         "Antall_elfiskeomganger" ,"Areal"   ,               "N_Laks"    ,             "N_Aure"   ,              "N_Roye"))
+drift_3<-query_table(con,table = "Driftsopplysninger", columns = c("DriftsopplysningerID","Lregnr", "Feltoperasjonsnr", "Feltaar","Loknr","Dato", "Dato_fra","Dato_til","N_Aal"  ,  "N_Merket_Laks",  "N_Merket_Aure",     "N_Merket_Røye"    ,     "N_Gjenfanget_Laks" ,     "N_Gjenfanget_Aure"  ,    "N_Gjenfanget_Roye"  ,    "Merknader"    ,          "SSMA_TimeStamp"  ))
+drift<-drift_1 %>% full_join(drift_2) %>% full_join(drift_3)
+```
+
+```
+objekter<-query_table(con,table="Objekter")
+arter<-query_table(con, table="Art_form")
+redskap<-query_table(connection=con,table = "Redskap")
+redskapspes<-query_table(con,table = "Redskapspesifikasjon")
+feltoperasjoner<-query_table(con,table = "feltoperasjoner")
+kjonn<-query_table(con,table = "Kjonn")
+kjonnstadium<-query_table(con,table = "Kjonnsstadium")
+kvalitet_skjellprove<-query_table(con,table = "kvalitet_skjellprove")
+Livsstadium<-query_table(connection=con,table = "Livsstadium")
+vill_oppdrett<-query_table(con,table = "Vill_oppdrett")
+visuell_vill_oppdrett<-query_table(con,table = "visuell_Vill_oppdrett")
+circuli<-query_table(con,table = "Circulimalinger")
+merknad<-query_table(con,table = "Merknad")
+skjellavleser<-query_table(con,table = "Skjellavleser")
+feltaar<-query_table(con,table = "FELTAAR")
+skader_defekter<-query_table(con,table = "Skader_defekter")
+kjonnsbestmet<-query_table(con,table="Kjonnsbest_metode")
+storrelse_aal<-query_table(con,table="Storrelsesgruppe_aal")
+admaktivitet<-query_table(con,table="AdmAktivitet")
+```
+
+# Get parts of the ENKELTFISK dataset - example Altaelva
+
+```
+alta_data <- query_table(connection = con, table="ENKELTFISK", columns = c("Lregnr","EnkeltfiskID", "Feltaar", "Dato","Art_formID","KjonnID","Vill_oppdrettetID","RedskapID"), condition = "Lregnr = 200212")
+```
+
+# Join ENKELTFISK dataset with support tables - use full_join()
+
+```
+alta_data %>% 
+full_join(objekter %>% select(Lregnr,Objektnavn)) %>% 
+  select(Objektnavn,everything()) %>% 
+  full_join(arter) %>% 
+  full_join(kjonn) %>%
+  full_join(redskap) %>% 
+  filter(Feltaar!="")
+```
+
 # Acknowledgments
 
 This R package has been created by [Benjamin Cretois](https://www.nina.no/english/Contact/Employees/Employee-info?AnsattID=15849) and [Henrik H. Berntsen](https://www.nina.no/kontakt/Ansatte/Ansattinformasjon.aspx?AnsattID=15368)
