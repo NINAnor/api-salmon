@@ -116,7 +116,7 @@ full_join(objekter %>% select(Lregnr,Objektnavn)) %>%
 
 # Acknowledgments
 
-This R package has been created by [Benjamin Cretois](https://www.nina.no/english/Contact/Employees/Employee-info?AnsattID=15849) and [Henrik H. Berntsen](https://www.nina.no/kontakt/Ansatte/Ansattinformasjon.aspx?AnsattID=15368)
+This R package has been created by [Benjamin Cretois](https://www.nina.no/english/Contact/Employees/Employee-info?AnsattID=15849).
 
 
 
