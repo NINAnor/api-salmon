@@ -5,13 +5,28 @@
 #' @examples 
 #' con<-fiskdatabasen_connect()
 #' @export
-fiskdatabasen_connect <- function(){
-  
-  con <- DBI::dbConnect(odbc::odbc(),
-                        Driver = "SQL Server", 
-                        server = "ninsql07.nina.no",
-                        database = "Fiskedatabasen",
-                        trusted_connection = TRUE)
+fiskdatabasen_connect <- function() {
+  # Detect the operating system
+  os <- Sys.info()["sysname"]
+
+  # Initialize driver name variable
+  driverName <- NA
+
+  # Define the driver name based on the OS
+  if (os == "Windows") {
+    driverName <- "SQL Server"
+  } else if (os == "Linux") {
+    driverName <- "FreeTDS"
+  } else {
+    stop("Unsupported operating system.")
+  }
+
+    con <- DBI::dbConnect(odbc::odbc(),
+                          Driver = driverName,
+                          server = "ninsql07.nina.no",
+                          database = "Fiskedatabasen",
+                          port=1433,
+                          trusted_connection = TRUE)
   return(con)
 }
 
